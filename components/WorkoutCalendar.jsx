@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons'
-import { BlurView } from 'expo-blur'
+import { BlurTargetView, BlurView } from 'expo-blur'
 import { LinearGradient } from 'expo-linear-gradient'
-import { useMemo, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { Modal, Pressable, StyleSheet, Text, View } from 'react-native'
 import { colors, radius, spacing } from '../constants/theme'
 import { mockWorkoutDates, toDateKey } from '../data/mockWorkouts'
@@ -47,6 +47,7 @@ function WorkoutCalendar({ loggedDates = mockWorkoutDates, today = new Date() })
   const [viewYear, setViewYear] = useState(today.getFullYear())
   const [viewMonth, setViewMonth] = useState(today.getMonth())
   const [pickerVisible, setPickerVisible] = useState(false)
+  const blurTargetRef = useRef(null)
 
   const loggedSet = useMemo(() => new Set(loggedDates), [loggedDates])
   const cells = useMemo(() => buildMonthCells(viewYear, viewMonth), [viewYear, viewMonth])
@@ -73,18 +74,41 @@ function WorkoutCalendar({ loggedDates = mockWorkoutDates, today = new Date() })
   return (
     <View style={styles.cardShadow}>
       <View style={styles.card}>
+        <BlurTargetView ref={blurTargetRef} pointerEvents="none" style={StyleSheet.absoluteFill}>
+          <LinearGradient
+            colors={[
+              'rgba(198, 255, 46, 0.26)',
+              'rgba(9, 20, 12, 0.30)',
+              'rgba(0, 255, 170, 0.14)',
+            ]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            style={StyleSheet.absoluteFill}
+          />
+          <View style={[styles.glow, styles.glowLime]} />
+          <View style={[styles.glow, styles.glowTeal]} />
+        </BlurTargetView>
+
+        <BlurView
+          blurTarget={blurTargetRef}
+          blurMethod="dimezisBlurViewSdk31Plus"
+          intensity={65}
+          tint="dark"
+          pointerEvents="none"
+          style={StyleSheet.absoluteFill}
+        />
+
         <LinearGradient
           colors={[
-            'rgba(255, 255, 255, 0.12)',
-            'rgba(29, 36, 48, 0.28)',
-            'rgba(249, 115, 22, 0.18)',
+            'rgba(255, 255, 255, 0.16)',
+            'rgba(255, 255, 255, 0.02)',
+            'rgba(198, 255, 46, 0.10)',
           ]}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
           pointerEvents="none"
           style={StyleSheet.absoluteFill}
         />
-        <BlurView intensity={22} tint="dark" pointerEvents="none" style={StyleSheet.absoluteFill} />
         <View style={styles.cardHighlight} pointerEvents="none" />
 
         <View style={styles.content}>
@@ -295,6 +319,24 @@ const styles = StyleSheet.create({
   content: {
     gap: spacing.sm,
     padding: spacing.md,
+  },
+  glow: {
+    position: 'absolute',
+    borderRadius: radius.pill,
+  },
+  glowLime: {
+    width: 150,
+    height: 150,
+    top: -40,
+    right: -30,
+    backgroundColor: 'rgba(198, 255, 46, 0.30)',
+  },
+  glowTeal: {
+    width: 140,
+    height: 140,
+    bottom: -40,
+    left: -30,
+    backgroundColor: 'rgba(0, 255, 170, 0.22)',
   },
   cardHighlight: {
     position: 'absolute',

@@ -38,7 +38,7 @@ There is no backend, auth, database, or state library yet.
 - Do not rely on a background JavaScript timer. For rest timers, schedule a local notification at the end time instead.
 - No `window`, `document`, or `localStorage`. Use React Native primitives and, when persistence is added, `expo-sqlite` or AsyncStorage installed via `npx expo install`.
 - `ios/` and `android/` are generated folders and are gitignored. Do not create or edit them by hand.
-- The dashboard calendar's glass card uses `expo-blur` and `expo-linear-gradient` (both ship in Expo Go). Android's real blur needs a `BlurTargetView` ref, so the card currently falls back to a translucent tint there; iOS and web get the full blur.
+- The dashboard calendar's glass card uses `expo-blur` and `expo-linear-gradient` (both ship in Expo Go). Android blur is wired with `BlurTargetView` + `blurMethod="dimezisBlurViewSdk31Plus"`; keep that ref pairing if you edit the card. Older Android versions fall back to a translucent tint.
 - Do not run `npm audit fix --force`: it currently proposes downgrading Expo to SDK 54. The reported advisories are transitive Expo CLI dependencies.
 - Metro is the bundler (`npx expo export`), not Vite. There is no `vite.config.js`.
 
