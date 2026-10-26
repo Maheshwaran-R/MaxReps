@@ -70,12 +70,9 @@ function WorkoutCalendar({ loggedDates = mockWorkoutDates, today = new Date() })
 
   return (
     <View style={styles.card}>
-      <View style={styles.heading}>
-        <Text style={styles.eyebrow}>Training calendar</Text>
-        <Text accessibilityRole="header" style={styles.title}>
-          Your workout days
-        </Text>
-      </View>
+      <Text accessibilityRole="header" style={styles.title}>
+        Your workout days
+      </Text>
 
       <View style={styles.controls}>
         <Pressable
@@ -85,7 +82,7 @@ function WorkoutCalendar({ loggedDates = mockWorkoutDates, today = new Date() })
           onPress={() => stepMonth(-1)}
           style={({ pressed }) => [styles.arrowButton, pressed && styles.pressed]}
         >
-          <Ionicons name="chevron-back" size={16} color={colors.muted} />
+          <Ionicons name="chevron-back" size={13} color={colors.muted} />
         </Pressable>
 
         <Pressable
@@ -95,7 +92,7 @@ function WorkoutCalendar({ loggedDates = mockWorkoutDates, today = new Date() })
           style={({ pressed }) => [styles.monthButton, pressed && styles.pressed]}
         >
           <Text style={styles.monthLabel}>{monthLabel}</Text>
-          <Ionicons name="chevron-down" size={14} color={colors.muted} />
+          <Ionicons name="chevron-down" size={12} color={colors.muted} />
         </Pressable>
 
         <Pressable
@@ -105,7 +102,7 @@ function WorkoutCalendar({ loggedDates = mockWorkoutDates, today = new Date() })
           onPress={() => stepMonth(1)}
           style={({ pressed }) => [styles.arrowButton, pressed && styles.pressed]}
         >
-          <Ionicons name="chevron-forward" size={16} color={colors.muted} />
+          <Ionicons name="chevron-forward" size={13} color={colors.muted} />
         </Pressable>
       </View>
 
@@ -198,7 +195,7 @@ function WorkoutCalendar({ loggedDates = mockWorkoutDates, today = new Date() })
                 onPress={() => setPickerVisible(false)}
                 style={({ pressed }) => [styles.closeButton, pressed && styles.pressed]}
               >
-                <Ionicons name="close" size={18} color={colors.muted} />
+                <Ionicons name="close" size={16} color={colors.muted} />
               </Pressable>
             </View>
 
@@ -210,7 +207,7 @@ function WorkoutCalendar({ loggedDates = mockWorkoutDates, today = new Date() })
                 onPress={() => setViewYear((year) => year - 1)}
                 style={({ pressed }) => [styles.yearButton, pressed && styles.pressed]}
               >
-                <Ionicons name="chevron-back" size={16} color={colors.muted} />
+                <Ionicons name="chevron-back" size={13} color={colors.muted} />
               </Pressable>
               <Text style={styles.yearText}>{viewYear}</Text>
               <Pressable
@@ -220,7 +217,7 @@ function WorkoutCalendar({ loggedDates = mockWorkoutDates, today = new Date() })
                 onPress={() => setViewYear((year) => year + 1)}
                 style={({ pressed }) => [styles.yearButton, pressed && styles.pressed]}
               >
-                <Ionicons name="chevron-forward" size={16} color={colors.muted} />
+                <Ionicons name="chevron-forward" size={13} color={colors.muted} />
               </Pressable>
             </View>
 
@@ -258,42 +255,32 @@ function WorkoutCalendar({ loggedDates = mockWorkoutDates, today = new Date() })
 
 const styles = StyleSheet.create({
   card: {
-    gap: spacing.lg,
-    padding: spacing.lg,
+    gap: spacing.sm,
+    padding: spacing.md,
     backgroundColor: colors.surface,
     borderWidth: 1,
     borderColor: colors.border,
     borderRadius: radius.lg,
   },
-  heading: {
-    gap: spacing.xs,
-  },
-  eyebrow: {
-    color: colors.accent,
-    fontSize: 11,
-    fontWeight: '700',
-    letterSpacing: 1.3,
-    textTransform: 'uppercase',
-  },
   title: {
     color: colors.text,
-    fontSize: 19,
+    fontSize: 14,
     fontWeight: '700',
   },
   controls: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: spacing.sm,
+    gap: spacing.xs,
   },
   arrowButton: {
-    width: 36,
-    height: 36,
+    width: 28,
+    height: 28,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: colors.surfaceRaised,
     borderWidth: 1,
     borderColor: colors.border,
-    borderRadius: radius.md,
+    borderRadius: radius.sm,
   },
   monthButton: {
     flex: 1,
@@ -301,15 +288,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     gap: spacing.xs,
-    height: 36,
+    height: 28,
     backgroundColor: colors.surfaceRaised,
     borderWidth: 1,
     borderColor: colors.border,
-    borderRadius: radius.md,
+    borderRadius: radius.sm,
   },
   monthLabel: {
     color: colors.text,
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: '700',
   },
   pressed: {
@@ -317,13 +304,13 @@ const styles = StyleSheet.create({
   },
   weekdayRow: {
     flexDirection: 'row',
-    marginBottom: spacing.xs,
+    marginBottom: 2,
   },
   weekdayText: {
     color: colors.muted,
-    fontSize: 11,
+    fontSize: 9,
     fontWeight: '700',
-    letterSpacing: 0.5,
+    letterSpacing: 0.4,
   },
   grid: {
     flexDirection: 'row',
@@ -331,13 +318,13 @@ const styles = StyleSheet.create({
   },
   cell: {
     width: '14.2857%',
-    aspectRatio: 1,
+    height: 26,
     alignItems: 'center',
     justifyContent: 'center',
   },
   dayCircle: {
-    width: '84%',
-    aspectRatio: 1,
+    width: 22,
+    height: 22,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: radius.pill,
@@ -346,12 +333,12 @@ const styles = StyleSheet.create({
     backgroundColor: colors.accent,
   },
   dayCircleToday: {
-    borderWidth: 1.5,
+    borderWidth: 1,
     borderColor: colors.accent,
   },
   dayText: {
     color: colors.text,
-    fontSize: 13,
+    fontSize: 11,
     fontWeight: '500',
   },
   dayTextFuture: {
@@ -371,7 +358,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     alignItems: 'center',
     justifyContent: 'space-between',
-    gap: spacing.sm,
+    gap: spacing.xs,
   },
   legend: {
     flexDirection: 'row',
@@ -379,18 +366,18 @@ const styles = StyleSheet.create({
     gap: spacing.xs,
   },
   legendDot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
+    width: 6,
+    height: 6,
+    borderRadius: 3,
     backgroundColor: colors.accent,
   },
   legendText: {
     color: colors.muted,
-    fontSize: 12,
+    fontSize: 10,
   },
   countText: {
     color: colors.muted,
-    fontSize: 12,
+    fontSize: 10,
   },
   modalOverlay: {
     flex: 1,
@@ -401,9 +388,9 @@ const styles = StyleSheet.create({
   },
   modalCard: {
     width: '100%',
-    maxWidth: 360,
-    gap: spacing.lg,
-    padding: spacing.xl,
+    maxWidth: 340,
+    gap: spacing.md,
+    padding: spacing.lg,
     backgroundColor: colors.surfaceRaised,
     borderWidth: 1,
     borderColor: colors.border,
@@ -416,49 +403,49 @@ const styles = StyleSheet.create({
   },
   modalTitle: {
     color: colors.text,
-    fontSize: 18,
+    fontSize: 15,
     fontWeight: '700',
   },
   closeButton: {
-    width: 32,
-    height: 32,
+    width: 28,
+    height: 28,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: radius.md,
+    borderRadius: radius.sm,
   },
   yearRow: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: spacing.lg,
+    gap: spacing.md,
   },
   yearButton: {
-    width: 32,
-    height: 32,
+    width: 28,
+    height: 28,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: radius.md,
+    borderRadius: radius.sm,
   },
   yearText: {
     color: colors.text,
-    fontSize: 15,
+    fontSize: 13,
     fontWeight: '700',
   },
   monthGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: spacing.sm,
+    gap: spacing.xs,
   },
   monthOption: {
     flexBasis: '30%',
     flexGrow: 1,
-    height: 40,
+    height: 34,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: colors.surface,
     borderWidth: 1,
     borderColor: colors.border,
-    borderRadius: radius.md,
+    borderRadius: radius.sm,
   },
   monthOptionSelected: {
     backgroundColor: colors.accent,
@@ -466,7 +453,7 @@ const styles = StyleSheet.create({
   },
   monthOptionText: {
     color: colors.muted,
-    fontSize: 13,
+    fontSize: 11,
     fontWeight: '600',
   },
   monthOptionTextSelected: {
