@@ -1,3 +1,7 @@
 node_modules
+node_modules.vite-old
 dist
+.expo
+coverage
 package-lock.json
+assets
