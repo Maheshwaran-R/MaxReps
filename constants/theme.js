@@ -10,6 +10,9 @@ export const colors = {
   accentSoft: 'rgba(249, 115, 22, 0.16)',
   onAccent: '#0e1116',
   overlay: 'rgba(5, 8, 12, 0.76)',
+  glassSurface: 'rgba(29, 36, 48, 0.42)',
+  glassBorder: 'rgba(255, 255, 255, 0.16)',
+  glassHighlight: 'rgba(255, 255, 255, 0.28)',
 }
 
 export const spacing = {

@@ -1,4 +1,6 @@
 import { Ionicons } from '@expo/vector-icons'
+import { BlurView } from 'expo-blur'
+import { LinearGradient } from 'expo-linear-gradient'
 import { useMemo, useState } from 'react'
 import { Modal, Pressable, StyleSheet, Text, View } from 'react-native'
 import { colors, radius, spacing } from '../constants/theme'
@@ -69,198 +71,238 @@ function WorkoutCalendar({ loggedDates = mockWorkoutDates, today = new Date() })
   }
 
   return (
-    <View style={styles.card}>
-      <Text accessibilityRole="header" style={styles.title}>
-        Your workout days
-      </Text>
+    <View style={styles.cardShadow}>
+      <View style={styles.card}>
+        <LinearGradient
+          colors={[
+            'rgba(255, 255, 255, 0.12)',
+            'rgba(29, 36, 48, 0.28)',
+            'rgba(249, 115, 22, 0.18)',
+          ]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          pointerEvents="none"
+          style={StyleSheet.absoluteFill}
+        />
+        <BlurView intensity={22} tint="dark" pointerEvents="none" style={StyleSheet.absoluteFill} />
+        <View style={styles.cardHighlight} pointerEvents="none" />
 
-      <View style={styles.controls}>
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel="Previous month"
-          hitSlop={8}
-          onPress={() => stepMonth(-1)}
-          style={({ pressed }) => [styles.arrowButton, pressed && styles.pressed]}
-        >
-          <Ionicons name="chevron-back" size={13} color={colors.muted} />
-        </Pressable>
+        <View style={styles.content}>
+          <Text accessibilityRole="header" style={styles.title}>
+            Your workout days
+          </Text>
 
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel={`Change month, currently ${monthLabel}`}
-          onPress={() => setPickerVisible(true)}
-          style={({ pressed }) => [styles.monthButton, pressed && styles.pressed]}
-        >
-          <Text style={styles.monthLabel}>{monthLabel}</Text>
-          <Ionicons name="chevron-down" size={12} color={colors.muted} />
-        </Pressable>
+          <View style={styles.controls}>
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel="Previous month"
+              hitSlop={8}
+              onPress={() => stepMonth(-1)}
+              style={({ pressed }) => [styles.arrowButton, pressed && styles.pressed]}
+            >
+              <Ionicons name="chevron-back" size={13} color={colors.muted} />
+            </Pressable>
 
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel="Next month"
-          hitSlop={8}
-          onPress={() => stepMonth(1)}
-          style={({ pressed }) => [styles.arrowButton, pressed && styles.pressed]}
-        >
-          <Ionicons name="chevron-forward" size={13} color={colors.muted} />
-        </Pressable>
-      </View>
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel={`Change month, currently ${monthLabel}`}
+              onPress={() => setPickerVisible(true)}
+              style={({ pressed }) => [styles.monthButton, pressed && styles.pressed]}
+            >
+              <Text style={styles.monthLabel}>{monthLabel}</Text>
+              <Ionicons name="chevron-down" size={12} color={colors.muted} />
+            </Pressable>
 
-      <View>
-        <View style={styles.weekdayRow}>
-          {WEEKDAY_LABELS.map((label, index) => (
-            <View key={`${label}-${index}`} style={styles.cell}>
-              <Text style={styles.weekdayText}>{label}</Text>
-            </View>
-          ))}
-        </View>
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel="Next month"
+              hitSlop={8}
+              onPress={() => stepMonth(1)}
+              style={({ pressed }) => [styles.arrowButton, pressed && styles.pressed]}
+            >
+              <Ionicons name="chevron-forward" size={13} color={colors.muted} />
+            </Pressable>
+          </View>
 
-        <View style={styles.grid}>
-          {cells.map((day, index) => {
-            if (!day) {
-              return <View key={`blank-${index}`} style={styles.cell} />
-            }
-
-            const date = new Date(viewYear, viewMonth, day)
-            const dateKey = toDateKey(date)
-            const isLogged = loggedSet.has(dateKey)
-            const isToday =
-              viewYear === today.getFullYear() &&
-              viewMonth === today.getMonth() &&
-              day === today.getDate()
-            const isFuture = date > todayStart
-            const label = `${MONTH_NAMES[viewMonth]} ${day}${
-              isLogged ? ', workout logged' : ''
-            }${isToday ? ', today' : ''}`
-
-            return (
-              <View key={dateKey} accessible accessibilityLabel={label} style={styles.cell}>
-                <View
-                  style={[
-                    styles.dayCircle,
-                    isLogged && styles.dayCircleLogged,
-                    isToday && !isLogged && styles.dayCircleToday,
-                  ]}
-                >
-                  <Text
-                    style={[
-                      styles.dayText,
-                      isFuture && !isLogged && styles.dayTextFuture,
-                      isToday && !isLogged && styles.dayTextToday,
-                      isLogged && styles.dayTextLogged,
-                    ]}
-                  >
-                    {day}
-                  </Text>
+          <View>
+            <View style={styles.weekdayRow}>
+              {WEEKDAY_LABELS.map((label, index) => (
+                <View key={`${label}-${index}`} style={styles.cell}>
+                  <Text style={styles.weekdayText}>{label}</Text>
                 </View>
-              </View>
-            )
-          })}
-        </View>
-      </View>
-
-      <View style={styles.footer}>
-        <View style={styles.legend}>
-          <View style={styles.legendDot} />
-          <Text style={styles.legendText}>Logged</Text>
-        </View>
-        <Text style={styles.countText}>
-          {loggedCount === 0
-            ? 'No workouts logged this month'
-            : `${loggedCount} ${loggedCount === 1 ? 'workout' : 'workouts'}`}
-        </Text>
-      </View>
-
-      <Modal
-        animationType="fade"
-        transparent
-        visible={pickerVisible}
-        onRequestClose={() => setPickerVisible(false)}
-      >
-        <View style={styles.modalOverlay}>
-          <Pressable
-            accessibilityRole="button"
-            accessibilityLabel="Dismiss month picker"
-            onPress={() => setPickerVisible(false)}
-            style={StyleSheet.absoluteFill}
-          />
-
-          <View style={styles.modalCard}>
-            <View style={styles.modalHeader}>
-              <Text style={styles.modalTitle}>Select month</Text>
-              <Pressable
-                accessibilityRole="button"
-                accessibilityLabel="Close month picker"
-                hitSlop={8}
-                onPress={() => setPickerVisible(false)}
-                style={({ pressed }) => [styles.closeButton, pressed && styles.pressed]}
-              >
-                <Ionicons name="close" size={16} color={colors.muted} />
-              </Pressable>
+              ))}
             </View>
 
-            <View style={styles.yearRow}>
-              <Pressable
-                accessibilityRole="button"
-                accessibilityLabel="Previous year"
-                hitSlop={8}
-                onPress={() => setViewYear((year) => year - 1)}
-                style={({ pressed }) => [styles.yearButton, pressed && styles.pressed]}
-              >
-                <Ionicons name="chevron-back" size={13} color={colors.muted} />
-              </Pressable>
-              <Text style={styles.yearText}>{viewYear}</Text>
-              <Pressable
-                accessibilityRole="button"
-                accessibilityLabel="Next year"
-                hitSlop={8}
-                onPress={() => setViewYear((year) => year + 1)}
-                style={({ pressed }) => [styles.yearButton, pressed && styles.pressed]}
-              >
-                <Ionicons name="chevron-forward" size={13} color={colors.muted} />
-              </Pressable>
-            </View>
+            <View style={styles.grid}>
+              {cells.map((day, index) => {
+                if (!day) {
+                  return <View key={`blank-${index}`} style={styles.cell} />
+                }
 
-            <View style={styles.monthGrid}>
-              {MONTH_NAMES.map((name, index) => {
-                const selected = index === viewMonth
+                const date = new Date(viewYear, viewMonth, day)
+                const dateKey = toDateKey(date)
+                const isLogged = loggedSet.has(dateKey)
+                const isToday =
+                  viewYear === today.getFullYear() &&
+                  viewMonth === today.getMonth() &&
+                  day === today.getDate()
+                const isFuture = date > todayStart
+                const label = `${MONTH_NAMES[viewMonth]} ${day}${
+                  isLogged ? ', workout logged' : ''
+                }${isToday ? ', today' : ''}`
+
                 return (
-                  <Pressable
-                    key={name}
-                    accessibilityRole="button"
-                    accessibilityLabel={`${name} ${viewYear}`}
-                    accessibilityState={{ selected }}
-                    onPress={() => selectMonth(index)}
-                    style={({ pressed }) => [
-                      styles.monthOption,
-                      selected && styles.monthOptionSelected,
-                      pressed && !selected && styles.pressed,
-                    ]}
-                  >
-                    <Text
-                      style={[styles.monthOptionText, selected && styles.monthOptionTextSelected]}
+                  <View key={dateKey} accessible accessibilityLabel={label} style={styles.cell}>
+                    <View
+                      style={[
+                        styles.dayCircle,
+                        isLogged && styles.dayCircleLogged,
+                        isToday && !isLogged && styles.dayCircleToday,
+                      ]}
                     >
-                      {name.slice(0, 3)}
-                    </Text>
-                  </Pressable>
+                      <Text
+                        style={[
+                          styles.dayText,
+                          isFuture && !isLogged && styles.dayTextFuture,
+                          isToday && !isLogged && styles.dayTextToday,
+                          isLogged && styles.dayTextLogged,
+                        ]}
+                      >
+                        {day}
+                      </Text>
+                    </View>
+                  </View>
                 )
               })}
             </View>
           </View>
+
+          <View style={styles.footer}>
+            <View style={styles.legend}>
+              <View style={styles.legendDot} />
+              <Text style={styles.legendText}>Logged</Text>
+            </View>
+            <Text style={styles.countText}>
+              {loggedCount === 0
+                ? 'No workouts logged this month'
+                : `${loggedCount} ${loggedCount === 1 ? 'workout' : 'workouts'}`}
+            </Text>
+          </View>
+
+          <Modal
+            animationType="fade"
+            transparent
+            visible={pickerVisible}
+            onRequestClose={() => setPickerVisible(false)}
+          >
+            <View style={styles.modalOverlay}>
+              <Pressable
+                accessibilityRole="button"
+                accessibilityLabel="Dismiss month picker"
+                onPress={() => setPickerVisible(false)}
+                style={StyleSheet.absoluteFill}
+              />
+
+              <View style={styles.modalCard}>
+                <View style={styles.modalHeader}>
+                  <Text style={styles.modalTitle}>Select month</Text>
+                  <Pressable
+                    accessibilityRole="button"
+                    accessibilityLabel="Close month picker"
+                    hitSlop={8}
+                    onPress={() => setPickerVisible(false)}
+                    style={({ pressed }) => [styles.closeButton, pressed && styles.pressed]}
+                  >
+                    <Ionicons name="close" size={16} color={colors.muted} />
+                  </Pressable>
+                </View>
+
+                <View style={styles.yearRow}>
+                  <Pressable
+                    accessibilityRole="button"
+                    accessibilityLabel="Previous year"
+                    hitSlop={8}
+                    onPress={() => setViewYear((year) => year - 1)}
+                    style={({ pressed }) => [styles.yearButton, pressed && styles.pressed]}
+                  >
+                    <Ionicons name="chevron-back" size={13} color={colors.muted} />
+                  </Pressable>
+                  <Text style={styles.yearText}>{viewYear}</Text>
+                  <Pressable
+                    accessibilityRole="button"
+                    accessibilityLabel="Next year"
+                    hitSlop={8}
+                    onPress={() => setViewYear((year) => year + 1)}
+                    style={({ pressed }) => [styles.yearButton, pressed && styles.pressed]}
+                  >
+                    <Ionicons name="chevron-forward" size={13} color={colors.muted} />
+                  </Pressable>
+                </View>
+
+                <View style={styles.monthGrid}>
+                  {MONTH_NAMES.map((name, index) => {
+                    const selected = index === viewMonth
+                    return (
+                      <Pressable
+                        key={name}
+                        accessibilityRole="button"
+                        accessibilityLabel={`${name} ${viewYear}`}
+                        accessibilityState={{ selected }}
+                        onPress={() => selectMonth(index)}
+                        style={({ pressed }) => [
+                          styles.monthOption,
+                          selected && styles.monthOptionSelected,
+                          pressed && !selected && styles.pressed,
+                        ]}
+                      >
+                        <Text
+                          style={[
+                            styles.monthOptionText,
+                            selected && styles.monthOptionTextSelected,
+                          ]}
+                        >
+                          {name.slice(0, 3)}
+                        </Text>
+                      </Pressable>
+                    )
+                  })}
+                </View>
+              </View>
+            </View>
+          </Modal>
         </View>
-      </Modal>
+      </View>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
+  cardShadow: {
+    borderRadius: radius.lg,
+    shadowColor: '#000000',
+    shadowOpacity: 0.45,
+    shadowRadius: 18,
+    shadowOffset: { width: 0, height: 10 },
+    elevation: 10,
+  },
   card: {
+    overflow: 'hidden',
+    backgroundColor: colors.glassSurface,
+    borderWidth: 1,
+    borderColor: colors.glassBorder,
+    borderRadius: radius.lg,
+  },
+  content: {
     gap: spacing.sm,
     padding: spacing.md,
-    backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: colors.border,
-    borderRadius: radius.lg,
+  },
+  cardHighlight: {
+    position: 'absolute',
+    top: 0,
+    left: spacing.lg,
+    right: spacing.lg,
+    height: 1,
+    backgroundColor: colors.glassHighlight,
   },
   title: {
     color: colors.text,
