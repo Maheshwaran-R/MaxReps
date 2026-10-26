@@ -12,7 +12,7 @@ afterEach(() => {
   jest.useRealTimers()
 })
 
-describe('Gym Tracker app', () => {
+describe('Max Reps app', () => {
   it('shows the dashboard at the root route', async () => {
     await renderRouter('./app', { initialUrl: '/' })
 

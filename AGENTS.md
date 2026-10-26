@@ -2,7 +2,7 @@
 
 ## Project
 
-Gym Tracker is an Expo SDK 58 / React Native app using Expo Router. JavaScript only — do not add TypeScript, `.ts`/`.tsx` files, `tsconfig`, or type packages. The original Vite web version is preserved in git history (commit `aaef28b`); Vite, React DOM, and web CSS are no longer part of the app.
+Max Reps is an Expo SDK 58 / React Native app using Expo Router. JavaScript only — do not add TypeScript, `.ts`/`.tsx` files, `tsconfig`, or type packages. The original Vite web version is preserved in git history (commit `aaef28b`); Vite, React DOM, and web CSS are no longer part of the app.
 
 There is no backend, auth, database, or state library yet.
 

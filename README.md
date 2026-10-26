@@ -1,4 +1,4 @@
-# Gym Tracker
+# Max Reps
 
 A mobile gym tracker built with Expo, React Native, and Expo Router.
 

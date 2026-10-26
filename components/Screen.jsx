@@ -12,7 +12,7 @@ function Screen({ eyebrow, title, subtitle, children }) {
       >
         <View style={styles.brandRow}>
           <View style={styles.brandMark} />
-          <Text style={styles.brand}>Gym Tracker</Text>
+          <Text style={styles.brand}>Max Reps</Text>
         </View>
 
         <View style={styles.heading}>

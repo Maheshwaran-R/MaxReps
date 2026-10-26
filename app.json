@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "Gym Tracker",
-    "slug": "gym-tracker",
+    "name": "Max Reps",
+    "slug": "maxreps",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "gymtracker",
+    "scheme": "maxreps",
     "userInterfaceStyle": "dark",
     "ios": {
       "supportsTablet": true
