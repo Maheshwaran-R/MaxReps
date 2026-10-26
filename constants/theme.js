@@ -7,7 +7,9 @@ export const colors = {
   muted: '#93a0b4',
   accent: '#f97316',
   accentPressed: '#ea580c',
+  accentSoft: 'rgba(249, 115, 22, 0.16)',
   onAccent: '#0e1116',
+  overlay: 'rgba(5, 8, 12, 0.76)',
 }
 
 export const spacing = {

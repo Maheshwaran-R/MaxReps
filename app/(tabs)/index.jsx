@@ -4,6 +4,7 @@ import Button from '../../components/Button'
 import Panel from '../../components/Panel'
 import Screen from '../../components/Screen'
 import StatCard from '../../components/StatCard'
+import WorkoutCalendar from '../../components/WorkoutCalendar'
 import { colors, spacing } from '../../constants/theme'
 
 const stats = [
@@ -19,6 +20,8 @@ export default function DashboardScreen() {
       title="Dashboard"
       subtitle="See your training volume, streaks, and recent sessions at a glance."
     >
+      <WorkoutCalendar />
+
       <View style={styles.statsGrid}>
         {stats.map((stat) => (
           <StatCard key={stat.label} label={stat.label} value={stat.value} />

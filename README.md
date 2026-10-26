@@ -53,8 +53,9 @@ app/
     index.jsx           Dashboard
     workouts.jsx        Workouts
   +not-found.jsx        Catch-all 404 route
-components/              Screen shell, panel, stat card, button
+components/              Screen shell, panel, stat card, button, workout calendar
 constants/theme.js       Colors, spacing, radii
+data/mockWorkouts.js     Temporary demo workout dates
 __tests__/               Jest / React Native Testing Library tests
 assets/images/           App icon, splash, adaptive icons
 ```

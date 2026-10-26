@@ -27,6 +27,7 @@ There is no backend, auth, database, or state library yet.
 - Routes are files. `(tabs)` is a route group and does not appear in the URL: `app/(tabs)/workouts.jsx` is `/workouts`.
 - Use `Link`, `useRouter`, and `useLocalSearchParams` from `expo-router`. Do not add React Navigation screen definitions manually.
 - `components/Screen.jsx` is the shared page shell (safe area + scroll + heading). Reuse it for new screens.
+- `components/WorkoutCalendar.jsx` is the dashboard month grid with a month picker; `data/mockWorkouts.js` holds temporary logged dates until real storage exists.
 - Colors, spacing, and radii live in `constants/theme.js`. Style with `StyleSheet.create`; there is no Tailwind, CSS, or DOM.
 - Tests live in `__tests__/`, never inside `app/` — every file in `app/` must be a route or layout.
 
