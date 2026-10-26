@@ -28,6 +28,7 @@ There is no backend, auth, database, or state library yet.
 - Use `Link`, `useRouter`, and `useLocalSearchParams` from `expo-router`. Do not add React Navigation screen definitions manually.
 - `components/Screen.jsx` is the shared page shell (safe area + scroll + heading). Reuse it for new screens.
 - `components/WorkoutCalendar.jsx` is the dashboard month grid with a month picker; `data/mockWorkouts.js` holds temporary logged dates until real storage exists.
+- `components/GlassCard.jsx` is the neutral frosted-glass shell used by `StatCard` and `Panel`. Keep it colourless — the lime-tinted glass belongs to the calendar card alone.
 - Colors, spacing, and radii live in `constants/theme.js`. Style with `StyleSheet.create`; there is no Tailwind, CSS, or DOM.
 - Tests live in `__tests__/`, never inside `app/` — every file in `app/` must be a route or layout.
 

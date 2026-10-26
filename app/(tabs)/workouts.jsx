@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   body: {
-    color: colors.muted,
+    color: colors.textSoft,
     fontSize: 15,
     lineHeight: 22,
   },

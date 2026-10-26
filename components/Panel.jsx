@@ -1,19 +1,23 @@
-import { StyleSheet, View } from 'react-native'
-import { colors, radius, spacing } from '../constants/theme'
+import { StyleSheet } from 'react-native'
+import { spacing } from '../constants/theme'
+import GlassCard from './GlassCard'
 
-function Panel({ children }) {
-  return <View style={styles.panel}>{children}</View>
+function Panel({ children, style }) {
+  return (
+    <GlassCard style={[styles.panel, style]} contentStyle={styles.content}>
+      {children}
+    </GlassCard>
+  )
 }
 
 const styles = StyleSheet.create({
   panel: {
+    alignSelf: 'stretch',
+  },
+  content: {
     alignItems: 'flex-start',
     gap: spacing.md,
     padding: spacing.xl,
-    backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: colors.border,
-    borderRadius: radius.lg,
   },
 })
 

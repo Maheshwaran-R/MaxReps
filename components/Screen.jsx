@@ -2,7 +2,7 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { colors, spacing } from '../constants/theme'
 
-function Screen({ eyebrow, title, subtitle, children }) {
+function Screen({ eyebrow, title, subtitle, action, children }) {
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
       <ScrollView
@@ -17,9 +17,12 @@ function Screen({ eyebrow, title, subtitle, children }) {
 
         <View style={styles.heading}>
           {eyebrow ? <Text style={styles.eyebrow}>{eyebrow}</Text> : null}
-          <Text accessibilityRole="header" style={styles.title}>
-            {title}
-          </Text>
+          <View style={styles.titleRow}>
+            <Text accessibilityRole="header" style={styles.title}>
+              {title}
+            </Text>
+            {action}
+          </View>
           {subtitle ? <Text style={styles.subtitle}>{subtitle}</Text> : null}
         </View>
 
@@ -35,9 +38,9 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background,
   },
   content: {
-    gap: spacing.xl,
+    gap: spacing.md,
     paddingHorizontal: spacing.xl,
-    paddingTop: spacing.md,
+    paddingTop: spacing.xs,
     paddingBottom: spacing.xxl,
   },
   brandRow: {
@@ -63,7 +66,13 @@ const styles = StyleSheet.create({
     letterSpacing: 0.2,
   },
   heading: {
-    gap: spacing.sm,
+    gap: spacing.xs + 2,
+  },
+  titleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: spacing.md,
   },
   eyebrow: {
     color: colors.accent,
@@ -73,8 +82,9 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
   },
   title: {
+    flexShrink: 1,
     color: colors.text,
-    fontSize: 30,
+    fontSize: 20,
     fontWeight: '800',
   },
   subtitle: {
